@@ -1,0 +1,49 @@
+version: '3' # vs mais atual
+    # dotnet run --urls=http://0.0.0.0:8080/
+    # "dotnet", "SistemaPedidos.dll", "--server.urls", "https://+:5000"
+    # dotnet SistemaPedidos.dll --server.urls https://+:8080
+    # dotnet watch run --server.urls http://0.0.0.0:8080
+
+
+    # curl http://localhost:8080
+    # Criar migration
+    # dotnet ef migrations add SistemaPedidos
+    # Executar migration
+    # dotnet ef database update
+    # dotnet run seeddata
+
+# dotnet tool install dotnet-ef \
+# && dotnet add package Microsoft.EntityFrameworkCore \
+# && dotnet add package Microsoft.EntityFrameworkCore.Design \
+# && dotnet add package Microsoft.EntityFrameworkCore.Sqlite \
+# && dotnet add package Microsoft.AspNetCore.Mvc \
+# && dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson \
+# && dotnet add package Microsoft.EntityFrameworkCore.Relational \
+# && dotnet add package Microsoft.Extensions.Configuration --version 6.0.1 \
+# && dotnet add package AutoMapper \
+# && dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+# Requisitos obrigatórios:
+# • O projeto deverá ter no mínimo essas três entidades: Fornecedor, Produto, Pedidos;
+# • A entidade Fornecedor deverá ter no mínimo 5 propriedades: Razão Social, CNPJ, UF, Email Contato e
+# Nome Contato;
+# • A entidade Produto deverá ter no mínimo 4 propriedades: Código, Descrição, Data do
+# Cadastro, Valor do Produto;
+# • A entidade Pedido deverá ter no mínimo 6 propriedades: Código do pedido, Data do pedido,
+# Produto, Quantidade de Produtos, Fornecedor, Valor Total do Pedido;
+# • CRUD de Fornecedor, Produto, Pedidos;
+# • Listagem dos pedidos por Fornecedor mostrando o valor total do pedido;
+
+services: 
+
+  # SistemasPedidos
+  api:
+    build: .
+    container_name: sistema-pedidos
+    restart: always
+    tty: true
+    working_dir: /app
+    volumes:      
+      - ./app:/app
+    ports:
+      - "8080:8080"
