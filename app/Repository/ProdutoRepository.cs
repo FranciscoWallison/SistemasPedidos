@@ -27,5 +27,44 @@ namespace SistemaPedidos.Repository
 
             return produtos;
         }
+
+        public ICollection<Produto> getALL()
+        {
+            return _context.Produtos.OrderBy(f => f.Id).ToList();
+        }
+
+        public Produto get(int Id)
+        {   
+
+            var produto = _context.Produtos.Find(Id);
+            _context
+                .Entry(produto)
+                .Collection("PedidosProdutos")
+                .Load();
+
+            return produto;
+        }
+        
+        public bool Create(Produto pedido)
+        {
+            return false;
+        }
+        public bool Update(Produto pedido)
+        {
+            return false;
+        }
+        public bool Delete(int Id)
+        {
+            return false;
+        }
+        public bool Save()
+        {
+            return false;
+        }
+
+        public bool Exists(int Id)
+        {
+            return _context.Produtos.Any(p => p.Id == Id);
+        }
     }
 }

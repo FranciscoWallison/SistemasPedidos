@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PXozMpBEk3rCU2k7d56E+wo9mS4p9UTOEhOxcvZIkJkK+9KjOd840niQNhyitAYpGf86E9SZQO5xfvWkns6dcA==",
+  "dgSpecHash": "XUQBZbkruXQpkc6H25pJsoAA1cLBEId9G0q3jQFfSjfP5TiM640qWHmrOAvmfS9VbZexv5T0bkfRjuaG/4ciJw==",
   "success": true,
-  "projectFilePath": "/app/v2/SistemaPedidos.csproj",
+  "projectFilePath": "/app/SistemaPedidos.csproj",
   "expectedPackageFiles": [
     "/root/.nuget/packages/automapper/11.0.1/automapper.11.0.1.nupkg.sha512",
     "/root/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/11.0.0/automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

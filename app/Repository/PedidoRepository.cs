@@ -89,7 +89,14 @@ namespace SistemaPedidos.Repository
             return _context.Pedidos.Any(p => p.Id == Id);
         }
 
+        public bool AddProduto(Produto produto, Pedido pedido)
+        {
+            return false;
+        }
 
-        
+        public bool RemoveProduto(Produto produto, Pedido pedido)
+        {
+            return false;
+        }
     }
 }

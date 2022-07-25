@@ -42,8 +42,9 @@ services:
     container_name: sistema-pedidos
     restart: always
     tty: true
-    working_dir: /app
     volumes:      
       - ./app:/app
+      - ./front:/front
     ports:
       - "8080:8080"
+      - "3000:3000"

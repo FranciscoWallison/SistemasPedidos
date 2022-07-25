@@ -13,5 +13,8 @@ namespace SistemaPedidos.Interfaces
         bool Save();
 
         bool Exists(int Id);
+
+        bool AddProduto(Produto produto, Pedido pedido);
+        bool RemoveProduto(Produto produto, Pedido pedido);
     }
 }

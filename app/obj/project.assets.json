@@ -2882,11 +2882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/app/v2/SistemaPedidos.csproj",
+      "projectUniqueName": "/app/SistemaPedidos.csproj",
       "projectName": "SistemaPedidos",
-      "projectPath": "/app/v2/SistemaPedidos.csproj",
+      "projectPath": "/app/SistemaPedidos.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/app/v2/obj/",
+      "outputPath": "/app/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"

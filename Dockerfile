@@ -10,12 +10,17 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 && apt-get -y install --no-install-recommends vim
 RUN dotnet tool install -g dotnet-ef
 
+RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+RUN apt install nodejs
+RUN npm install -g create-react-app
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+RUN nvm install node | bash
 
 ENV PATH $PATH:/root/.dotnet/tools
 
-WORKDIR /app
+COPY ./front /front
 COPY ./app /app
-
+WORKDIR /app
 # RUN dotnet tool install dotnet-ef
 # RUN dotnet add package Microsoft.EntityFrameworkCore
 # RUN dotnet add package Microsoft.EntityFrameworkCore.Design
