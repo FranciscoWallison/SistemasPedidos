@@ -3,6 +3,7 @@ using SistemaPedidos.Dto;
 using SistemaPedidos.Interfaces;
 using SistemaPedidos.Models;
 
+
 namespace SistemaPedidos.Repository
 {
     public class ProdutoRepository : IProdutoRepository
@@ -45,11 +46,13 @@ namespace SistemaPedidos.Repository
             return produto;
         }
         
-        public bool Create(Produto pedido)
+        public bool Create(Produto produto)
         {
-            return false;
+            produto.DataCadastro = DateTime.Now;
+            _context.Add(produto);
+            return Save();
         }
-        public bool Update(Produto pedido)
+        public bool Update(Produto produto)
         {
             return false;
         }
@@ -59,7 +62,8 @@ namespace SistemaPedidos.Repository
         }
         public bool Save()
         {
-            return false;
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public bool Exists(int Id)

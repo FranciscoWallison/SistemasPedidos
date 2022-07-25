@@ -1,21 +1,37 @@
-import React from 'react';
+
+import React, { Component } from 'react'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import {
-    Routes, Route
+    Routes,
+    Route,
+    Link
 } from "react-router-dom";
-import Layout from "./Layout";
+
 import Home from './Home';
-import User from './user';
+import Produto from './produto';
 
-const rootElement = document.getElementById("root");
-
-const Webpages = () => {
-    return(
-        <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="User" element={<User />} />
-            </Route>
-        </Routes>
-    );
-};
-export default Webpages;
+export default class Webpages extends Component {
+    render() {
+        return (
+            <div>
+                <div>
+                    <Navbar bg="dark" variant="dark">
+                        <Container>
+                        <Navbar.Brand href="/home">Navbar</Navbar.Brand>
+                        <Nav className="me-auto">
+                            <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/produto">Produtos</Nav.Link>
+                        </Nav>
+                        </Container>
+                    </Navbar>
+                </div>
+                <div>
+                    <Routes>
+                        <Route path="/produto" element={<Produto />} /> 
+                        <Route path="/" element={<Home />} /> 
+                    </Routes>
+                </div>
+            </div>
+        )
+    }
+}

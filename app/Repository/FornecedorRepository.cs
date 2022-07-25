@@ -31,11 +31,13 @@ namespace SistemaPedidos.Repository
             return fornecedor;
         }
         
-        public bool Create(Fornecedor pedido)
+        public bool Create(Fornecedor fornecedor)
         {
-            return false;
+            _context.Add(fornecedor);
+
+            return Save();
         }
-        public bool Update(Fornecedor pedido)
+        public bool Update(Fornecedor fornecedor)
         {
             return false;
         }
@@ -45,7 +47,8 @@ namespace SistemaPedidos.Repository
         }
         public bool Save()
         {
-            return false;
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public bool Exists(int Id)
