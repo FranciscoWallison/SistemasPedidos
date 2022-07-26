@@ -53,9 +53,6 @@ namespace SistemaPedidos.Controllers
         public IActionResult Create([FromBody] FornecedorDto fornecedorCreate)
         {
 
-            if (fornecedorCreate == null)
-                return BadRequest(ModelState);
-
             var pedidoMap = _mapper.Map<Fornecedor>(fornecedorCreate);
 
             if (!_fornecedorRepository.Create(pedidoMap))
@@ -68,25 +65,19 @@ namespace SistemaPedidos.Controllers
         }
 
 
-        [HttpPut("{pedidoId}")]
+        [HttpPut("{fornecedorId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Update(int pedidoId, [FromBody] FornecedorDto pedidoUpdate)
+        public IActionResult Update(int fornecedorId, [FromBody] FornecedorDto fornecedorUpdate)
         {
-            if (pedidoUpdate == null)
-                return BadRequest(ModelState);
-
-            if (pedidoId != pedidoUpdate.Id)
-                return BadRequest(ModelState);
-
-            if (!_fornecedorRepository.Exists(pedidoId))
+            if (!_fornecedorRepository.Exists(fornecedorId))
                 return NotFound();
 
-            if (!ModelState.IsValid)
-                return BadRequest();
 
-            var fornecedorMap = _mapper.Map<Fornecedor>(pedidoUpdate);
+            var fornecedorMap = _mapper.Map<Fornecedor>(fornecedorUpdate);
+
+            fornecedorMap.Id = fornecedorId;
 
             if (!_fornecedorRepository.Update(fornecedorMap))
             {
@@ -97,18 +88,18 @@ namespace SistemaPedidos.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{pedidoId}")]
+        [HttpDelete("{fornecedorId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete(int pedidoId)
+        public IActionResult Delete(int fornecedorId)
         {
-            if (!_fornecedorRepository.Exists(pedidoId))
+            if (!_fornecedorRepository.Exists(fornecedorId))
             {
                 return NotFound();
             }
 
-            if (!_fornecedorRepository.Delete(pedidoId))
+            if (!_fornecedorRepository.Delete(fornecedorId))
             {
                 ModelState.AddModelError("", "Something went wrong deleting reviewer");
             }

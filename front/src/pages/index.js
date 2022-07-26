@@ -9,6 +9,8 @@ import {
 
 import Home from './Home';
 import Produto from './produto';
+import Fornecedor from './fornecedor';
+import Pedido from './pedido';
 
 export default class Webpages extends Component {
     render() {
@@ -17,9 +19,11 @@ export default class Webpages extends Component {
                 <div>
                     <Navbar bg="dark" variant="dark">
                         <Container>
-                        <Navbar.Brand href="/home">Navbar</Navbar.Brand>
+                        <Navbar.Brand href="/">SP</Navbar.Brand>
                         <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/fornecedor">Fornecedores</Nav.Link>
+                            <Nav.Link as={Link} to="/pedido">Pedidos</Nav.Link>
                             <Nav.Link as={Link} to="/produto">Produtos</Nav.Link>
                         </Nav>
                         </Container>
@@ -27,6 +31,8 @@ export default class Webpages extends Component {
                 </div>
                 <div>
                     <Routes>
+                        <Route path="/produto" element={<Pedido />} /> 
+                        <Route path="/fornecedor" element={<Fornecedor />} /> 
                         <Route path="/produto" element={<Produto />} /> 
                         <Route path="/" element={<Home />} /> 
                     </Routes>

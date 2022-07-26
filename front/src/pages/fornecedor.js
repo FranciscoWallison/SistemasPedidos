@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 
-const Produto = () => {
+const Fornecedor = () => {
     const [loading, setloading] = useState(false);
     const [alerting, setAlerting] = useState(false);
     const [formulario, setFormulario] = useState(true);
@@ -17,11 +17,16 @@ const Produto = () => {
     
     const [typeSend, setTypeSend] = useState([]);  
     const [title, setTitle] = useState([]);
-    const [preco, setPreco] = useState([]);
-    const [descricao, setDescricao] = useState([]);
     const [produto, setProduto] = useState([]);
     const [show, setShow] = useState(false);
     const [showdelete, setShowdelete] = useState(false);
+
+    const [nome, setNome] = useState("");
+    const [razaosocial, setRazaosocial] = useState("");
+    const [email, setEmail] = useState("");
+    const [uf, setUf] = useState("");
+    const [cnpj, setCnpj] = useState("");
+    
 
     useEffect(() => {
       getall();
@@ -29,19 +34,27 @@ const Produto = () => {
 
     const fnHandleSubmit = event => {
       event.preventDefault();
-      // iniciar requisição 
+      console.log('event', event)
+      // iniciar requisição
       setloading(true);
       setFormulario(false);
 
-      let pedido = {
-        "descricao": event.target[0].value,
-        "preco": event.target[1].value
+      let fornecedor = {
+        "nome": event.target[0].value,
+        "razaoSocial": event.target[1].value,
+        "email": event.target[2].value,
+        "uf": event.target[3].value,
+        "cnpj": event.target[4].value,
+        "pedidos": [
+        ]
       }
-      submit(pedido);
+
+      console.log('event', event, fornecedor)
+      submit(fornecedor);
   }
 
   function getall() {
-    fetch("http://localhost:8080/api/Produto")
+    fetch("http://localhost:8080/api/Fornecedor")
             .then(res => res.json())
             .then(
                 (data) => {
@@ -59,14 +72,19 @@ const Produto = () => {
 
     function editar(id) {
       setFormulario(true);
-      console.log('Pedidos, editar', id);
-      fetch("http://localhost:8080/api/Produto/"+id)
+      console.log('Fornecedores, editar', id);
+      fetch("http://localhost:8080/api/Fornecedor/"+id)
       .then(res => res.json())
       .then(
           (data) => {
-              setTitle("Editar Pedido");
-              setPreco(data.preco);
-              setDescricao(data.descricao);
+              setTitle("Editar Fornecedor");
+              
+              setNome(data.nome)
+              setRazaosocial(data.razaoSocial)
+              setEmail(data.email)
+              setUf(data.uf)
+              setCnpj(data.cnpj)
+
               setShow(true);
 
               setTypeSend({type:"update", id: id});
@@ -80,7 +98,7 @@ const Produto = () => {
     }
 
     function deletar(id) {
-      console.log('Pedidos, deletar', id);
+      console.log('Fornecedores, deletar', id);
       setTypeSend({type:"delete", id: id});
 
       handleShowDelete();
@@ -89,25 +107,29 @@ const Produto = () => {
     function criar() {
       setFormulario(true);
       setShow(true);
-      setPreco();
-      setDescricao("");
-      setTitle("Criar Pedido");
+      setNome("")
+      setRazaosocial("")
+      setEmail("")
+      setUf("")
+      setCnpj("")
+
+      setTitle("Criar Fornecedor");
       setTypeSend({type:"create", id: 0});
-      console.log('Pedidos, Criar');
+      console.log('Fornecedores, Criar');
     }
     
     const createClose = () => setShow(false);
     // const handleShow = () => setShow(true);
 
-    function update(id, pedido) {
+    function update(id, fornecedor) {
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedido)
+        body: JSON.stringify(fornecedor)
       };
-      fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
+      fetch('http://localhost:8080/api/Fornecedor/'+id, requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - fornecedor") )
         .finally(() => {
           getall()
           setloading(false);
@@ -121,9 +143,9 @@ const Produto = () => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
+      fetch('http://localhost:8080/api/Fornecedor/'+id, requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - fornecedor") )
         .finally(() => {
           getall()
           setloading(false);          
@@ -133,15 +155,15 @@ const Produto = () => {
     }
 
 
-    function create(pedido) {
+    function create(fornecedor) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedido)
+        body: JSON.stringify(fornecedor)
       };
-      fetch('http://localhost:8080/api/Produto/', requestOptions)
+      fetch('http://localhost:8080/api/Fornecedor/', requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - fornecedor") )
         .finally(() => {
           getall()
           setloading(false);
@@ -154,13 +176,13 @@ const Produto = () => {
     //   console.log("onSubmit",event)
     // }
 
-    function submit(pedido) {
+    function submit(fornecedor) {
       switch (typeSend.type) {
         case "create":
-          create(pedido);
+          create(fornecedor);
           break;
         case "update":
-          update(typeSend.id, pedido);
+          update(typeSend.id, fornecedor);
           break;
         case "delete":
           deleteproduto(typeSend.id);
@@ -182,19 +204,21 @@ return(
       <Row xs={2} md={4} lg={6}>
       <Col>
         <h1>
-          Pedidos {' '} <Button variant="success"  onClick={criar} size="lg">Criar</Button>
+          Fornecedores {' '} <Button variant="success"  onClick={criar} size="lg">Criar</Button>
         </h1>
         </Col>  {' '}
       </Row>
       {' '}
-      {/* add pedido */}
+      {/* add fornecedor */}
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Data de Cadastro</th>
+            <th>Nome</th>
+            <th>Razão Social</th>
+            <th>cnpj</th>
+            <th>Email</th>
+            <th>UF</th>            
             <th>Editar / Deletar</th>
           </tr>
         </thead>
@@ -206,13 +230,19 @@ return(
                   {data.id}
                 </td>
                 <td>
-                  {data.descricao}
+                  {data.nome}
                 </td>
                 <td>
-                  {data.preco}
+                  {data.razaoSocial}
                 </td>
                 <td>
-                  {data.dataCadastro}
+                  {data.cnpj}
+                </td>
+                <td>
+                  {data.email}
+                </td>
+                <td>
+                  {data.uf}
                 </td>
                 <th>
                   <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Editar</Button>
@@ -245,22 +275,48 @@ return(
         </Container>
         <Container style={{display: formulario ? 'block' : 'none' }}>
           <form onSubmit={fnHandleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicDescricao">
-              <Form.Label>Descrição</Form.Label>
-              <Form.Control name="descricao" type="text" placeholder="Enter descricao" defaultValue={descricao} />
+
+            <Form.Group className="mb-3" controlId="formBasicNome">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control name="nome" type="text" placeholder="Enter nome" defaultValue={nome} />
               <Form.Text className="text-muted">
-               Descrição do Produto
+               Nome do Fornecedor
               </Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPreco">
-              <Form.Label>Preço</Form.Label>
-              <Form.Control type="number" placeholder="Enter preco" defaultValue={preco} />
+
+            <Form.Group className="mb-3" controlId="formBasicrazaoSocial">
+              <Form.Label>Razão Social</Form.Label>
+              <Form.Control name="razaosocial" type="text" placeholder="Enter razaosocial" defaultValue={razaosocial} />
               <Form.Text className="text-muted">
-               Descrição do Preço
+               Razão Social do Fornecedor
               </Form.Text>
             </Form.Group>
-          
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control name="email" type="email" placeholder="Enter email" defaultValue={email} />
+              <Form.Text className="text-muted">
+               Email do Fornecedor
+              </Form.Text>
+            </Form.Group>
+
+
+            <Form.Select >
+              <option>UF</option>
+              <option value="CE">CE</option>
+              <option value="SP">SP</option>
+              <option value="BA">BA</option>
+            </Form.Select>
+
+            <Form.Group className="mb-3" controlId="formBasicCNPJ">
+              <Form.Label>CNPJ</Form.Label>
+              <Form.Control name="cnpj" type="cnpj" placeholder="Enter cnpj" defaultValue={cnpj} />
+              <Form.Text className="text-muted">
+               CNPJ do Fornecedor
+              </Form.Text>
+            </Form.Group>
+            
             <Modal.Footer>
               <Button variant="secondary" onClick={createClose}>
                 Fechar
@@ -277,7 +333,7 @@ return(
 
       <Modal show={showdelete} onHide={handleCloseDelete} animation={false} fade={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Tem certeza que deseja deletar o Produto</Modal.Title>
+          <Modal.Title>Tem certeza que deseja deletar o Fornecedor</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
@@ -293,4 +349,4 @@ return(
   </>
 );
 }
-export default Produto;
+export default Fornecedor;

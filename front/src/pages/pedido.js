@@ -22,7 +22,7 @@ const Produto = () => {
     const [produto, setProduto] = useState([]);
     const [show, setShow] = useState(false);
     const [showdelete, setShowdelete] = useState(false);
-
+    
     useEffect(() => {
       getall();
     }, [])

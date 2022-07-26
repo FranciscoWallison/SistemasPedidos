@@ -68,25 +68,19 @@ namespace SistemaPedidos.Controllers
         }
 
 
-        [HttpPut("{pedidoId}")]
+        [HttpPut("{produtoId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Update(int pedidoId, [FromBody] ProdutoDto pedidoUpdate)
+        public IActionResult Update(int produtoId, [FromBody] ProdutoDto produtoUpdate)
         {
-            if (pedidoUpdate == null)
-                return BadRequest(ModelState);
 
-            if (pedidoId != pedidoUpdate.Id)
-                return BadRequest(ModelState);
-
-            if (!_produtosRepository.Exists(pedidoId))
+            if (!_produtosRepository.Exists(produtoId))
                 return NotFound();
 
-            if (!ModelState.IsValid)
-                return BadRequest();
+            var produtoMap = _mapper.Map<Produto>(produtoUpdate);
 
-            var produtoMap = _mapper.Map<Produto>(pedidoUpdate);
+            produtoMap.Id = produtoId;
 
             if (!_produtosRepository.Update(produtoMap))
             {
@@ -97,18 +91,18 @@ namespace SistemaPedidos.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{pedidoId}")]
+        [HttpDelete("{produtoId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete(int pedidoId)
+        public IActionResult Delete(int produtoId)
         {
-            if (!_produtosRepository.Exists(pedidoId))
+            if (!_produtosRepository.Exists(produtoId))
             {
                 return NotFound();
             }
 
-            if (!_produtosRepository.Delete(pedidoId))
+            if (!_produtosRepository.Delete(produtoId))
             {
                 ModelState.AddModelError("", "Something went wrong deleting reviewer");
             }

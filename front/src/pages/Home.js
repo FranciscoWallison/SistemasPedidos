@@ -21,7 +21,7 @@ return(
                             <Card.Text>
                                 Informações, Cadastro e Listagem
                             </Card.Text>
-                            <Button variant="primary">Listagem</Button>
+                            <Button variant="primary" href="fornecedor">Listagem</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -45,7 +45,7 @@ return(
                             <Card.Text>
                                 Informações, Cadastro e Listagem
                             </Card.Text>
-                            <Button variant="primary">Listagem</Button>
+                            <Button variant="primary" href="pedido">Listagem</Button>
                         </Card.Body>
                     </Card>
                 </Col>

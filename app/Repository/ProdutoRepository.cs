@@ -54,11 +54,14 @@ namespace SistemaPedidos.Repository
         }
         public bool Update(Produto produto)
         {
-            return false;
+            _context.Update(produto);
+            return Save();
         }
         public bool Delete(int Id)
         {
-            return false;
+           var produto = _context.Produtos.Find(Id);
+            _context.Remove(produto);
+            return Save();
         }
         public bool Save()
         {

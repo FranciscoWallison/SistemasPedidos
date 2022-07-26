@@ -34,16 +34,18 @@ namespace SistemaPedidos.Repository
         public bool Create(Fornecedor fornecedor)
         {
             _context.Add(fornecedor);
-
             return Save();
         }
         public bool Update(Fornecedor fornecedor)
         {
-            return false;
+           _context.Update(fornecedor);
+            return Save();
         }
         public bool Delete(int Id)
-        {
-            return false;
+        {   
+            var fornecedor = _context.Fornecedores.Find(Id);
+            _context.Remove(fornecedor);
+            return Save();
         }
         public bool Save()
         {
