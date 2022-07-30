@@ -3,6 +3,7 @@ using SistemaPedidos.Context;
 using SistemaPedidos.Dto;
 using SistemaPedidos.Interfaces;
 using SistemaPedidos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaPedidos.Repository
 {
@@ -14,30 +15,39 @@ namespace SistemaPedidos.Repository
         public PedidoRepository(MovieContext context, IMapper mapper)
         {
             _context = context;
-             _mapper = mapper;
+            _mapper = mapper;
         }
 
         public ICollection<Pedido> getALL()
         {
-           var pedidos = _context.Pedidos.OrderBy(p => p.Id).ToList();
+           var pedidos = _context.Pedidos
+           .Include("Fornecedor")
+           .OrderBy(p => p.Id).ToList();
+                
             return pedidos;
         }
 
-        public Pedido get(int Id)
+        public PedidoDto get(int Id)
         {   
 
-            var pedidosN = _context.Pedidos.Find(Id);
-            _context
-                .Entry(pedidosN)
-                .Reference("Fornecedor")
-                .Load();
+            var pedidosN = _context.Pedidos
+            .Where(p => p.Id == Id)
+            .Include("Fornecedor")
+            .Include("PedidosProdutos.Produto")
+            .FirstOrDefault();
 
-           _context
-                .Entry(pedidosN)
-                .Collection("PedidosProdutos")
-                .Load();
+            // converte produtos
+            List<Produto> produtosN = new List<Produto>();
+            foreach(PedidoProduto p in pedidosN.PedidosProdutos)
+            {
+               produtosN.Add(p.Produto);
+            }
+            var produtos =  _mapper.Map<List<ProdutoDto>>(produtosN);
 
-            return pedidosN;
+
+            var peidoMap = _mapper.Map<PedidoDto>(pedidosN);
+            peidoMap.Produtos = produtos;
+            return peidoMap;
         }
 
         public bool Create(int fornecedorId, List<Produto> produtos, Pedido newPedido)

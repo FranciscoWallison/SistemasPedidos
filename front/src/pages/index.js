@@ -31,7 +31,7 @@ export default class Webpages extends Component {
                 </div>
                 <div>
                     <Routes>
-                        <Route path="/produto" element={<Pedido />} /> 
+                        <Route path="/pedido" element={<Pedido />} /> 
                         <Route path="/fornecedor" element={<Fornecedor />} /> 
                         <Route path="/produto" element={<Produto />} /> 
                         <Route path="/" element={<Home />} /> 

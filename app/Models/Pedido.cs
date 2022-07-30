@@ -19,4 +19,5 @@ public class Pedido
 
     public virtual Fornecedor Fornecedor { get; set; }
     public virtual ICollection<PedidoProduto> PedidosProdutos { get; set; }
+    // public virtual ICollection<Produto> Produto { get; set; }
 }

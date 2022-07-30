@@ -6,7 +6,7 @@ namespace SistemaPedidos.Interfaces
     public interface IPedidoRepository
     {
         ICollection<Pedido> getALL();
-        Pedido get(int id);
+        PedidoDto get(int id);
         bool Create(int fornecedorId, List<Produto> produto, Pedido pedido);
         bool Update(Pedido pedido);
         bool Delete(int pedidoId);

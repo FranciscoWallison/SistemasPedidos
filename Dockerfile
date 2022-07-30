@@ -22,16 +22,21 @@ COPY ./front /front
 COPY ./app /app
 WORKDIR /app
 RUN dotnet tool install dotnet-ef
-RUN dotnet add package Microsoft.EntityFrameworkCore
-RUN dotnet add package Microsoft.EntityFrameworkCore.Design
-RUN dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-RUN dotnet add package Microsoft.AspNetCore.Mvc
-RUN dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson
-RUN dotnet add package Microsoft.EntityFrameworkCore.Relational
+
+# RUN dotnet add package Microsoft.AspNetCore.Mvc
+# RUN dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson
+# RUN dotnet add package Microsoft.Extensions.Configuration --version 6.0.1
+# RUN dotnet add package System.Data.Entity.Repository
+
+
 RUN dotnet add package AutoMapper
 RUN dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+RUN dotnet add package Microsoft.EntityFrameworkCore
+RUN dotnet add package Microsoft.EntityFrameworkCore.Design
+RUN dotnet add package Microsoft.EntityFrameworkCore.InMemory
+RUN dotnet add package Microsoft.EntityFrameworkCore.Relational
+RUN dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 RUN dotnet add package Microsoft.EntityFrameworkCore.Tools
-RUN dotnet add package Microsoft.Extensions.Configuration --version 6.0.1
-RUN dotnet add package System.Data.Entity.Repository
+RUN dotnet add package Microsoft.Data.Sqlite
 
 EXPOSE 8080

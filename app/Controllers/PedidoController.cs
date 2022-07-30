@@ -37,7 +37,7 @@ namespace SistemaPedidos.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(Pedido))]
+        [ProducesResponseType(200, Type = typeof(PedidoDto))]
         [ProducesResponseType(400)]
         public IActionResult get(int Id)
         {

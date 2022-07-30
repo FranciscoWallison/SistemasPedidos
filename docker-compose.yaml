@@ -12,17 +12,6 @@ version: '3' # vs mais atual
     # dotnet ef database update
     # dotnet run seeddata
 
-# dotnet tool install dotnet-ef \
-# && dotnet add package Microsoft.EntityFrameworkCore \
-# && dotnet add package Microsoft.EntityFrameworkCore.Design \
-# && dotnet add package Microsoft.EntityFrameworkCore.Sqlite \
-# && dotnet add package Microsoft.AspNetCore.Mvc \
-# && dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson \
-# && dotnet add package Microsoft.EntityFrameworkCore.Relational \
-# && dotnet add package Microsoft.Extensions.Configuration --version 6.0.1 \
-# && dotnet add package AutoMapper \
-# && dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
-
 # Requisitos obrigatórios:
 # • O projeto deverá ter no mínimo essas três entidades: Fornecedor, Produto, Pedidos;
 # • A entidade Fornecedor deverá ter no mínimo 5 propriedades: Razão Social, CNPJ, UF, Email Contato e

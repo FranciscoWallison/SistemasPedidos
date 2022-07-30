@@ -33,11 +33,11 @@ const Produto = () => {
       setloading(true);
       setFormulario(false);
 
-      let pedido = {
+      let produto = {
         "descricao": event.target[0].value,
         "preco": event.target[1].value
       }
-      submit(pedido);
+      submit(produto);
   }
 
   function getall() {
@@ -45,7 +45,7 @@ const Produto = () => {
             .then(res => res.json())
             .then(
                 (data) => {
-                  console.log(data);
+                  console.log("Produto",data);
                   setProduto(data);
                 },
                 (error) => {
@@ -59,12 +59,12 @@ const Produto = () => {
 
     function editar(id) {
       setFormulario(true);
-      console.log('Pedidos, editar', id);
+      console.log('Produtos, editar', id);
       fetch("http://localhost:8080/api/Produto/"+id)
       .then(res => res.json())
       .then(
           (data) => {
-              setTitle("Editar Pedido");
+              setTitle("Editar Produto");
               setPreco(data.preco);
               setDescricao(data.descricao);
               setShow(true);
@@ -80,7 +80,7 @@ const Produto = () => {
     }
 
     function deletar(id) {
-      console.log('Pedidos, deletar', id);
+      console.log('Produtos, deletar', id);
       setTypeSend({type:"delete", id: id});
 
       handleShowDelete();
@@ -91,23 +91,23 @@ const Produto = () => {
       setShow(true);
       setPreco();
       setDescricao("");
-      setTitle("Criar Pedido");
+      setTitle("Criar Produto");
       setTypeSend({type:"create", id: 0});
-      console.log('Pedidos, Criar');
+      console.log('Produtos, Criar');
     }
     
     const createClose = () => setShow(false);
     // const handleShow = () => setShow(true);
 
-    function update(id, pedido) {
+    function update(id, produto) {
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedido)
+        body: JSON.stringify(produto)
       };
       fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - produto") )
         .finally(() => {
           getall()
           setloading(false);
@@ -123,7 +123,7 @@ const Produto = () => {
       };
       fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - produto") )
         .finally(() => {
           getall()
           setloading(false);          
@@ -133,15 +133,15 @@ const Produto = () => {
     }
 
 
-    function create(pedido) {
+    function create(produto) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedido)
+        body: JSON.stringify(produto)
       };
       fetch('http://localhost:8080/api/Produto/', requestOptions)
         .then(response => response.json())
-        .then(data => console.log("update - pedido") )
+        .then(data => console.log("update - produto") )
         .finally(() => {
           getall()
           setloading(false);
@@ -154,13 +154,13 @@ const Produto = () => {
     //   console.log("onSubmit",event)
     // }
 
-    function submit(pedido) {
+    function submit(produto) {
       switch (typeSend.type) {
         case "create":
-          create(pedido);
+          create(produto);
           break;
         case "update":
-          update(typeSend.id, pedido);
+          update(typeSend.id, produto);
           break;
         case "delete":
           deleteproduto(typeSend.id);
@@ -182,12 +182,12 @@ return(
       <Row xs={2} md={4} lg={6}>
       <Col>
         <h1>
-          Pedidos {' '} <Button variant="success"  onClick={criar} size="lg">Criar</Button>
+          Produtos {' '} <Button variant="success"  onClick={criar} size="lg">Criar</Button>
         </h1>
         </Col>  {' '}
       </Row>
       {' '}
-      {/* add pedido */}
+      {/* add produto */}
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 
-const Produto = () => {
+const Pedido = () => {
     const [loading, setloading] = useState(false);
     const [alerting, setAlerting] = useState(false);
     const [formulario, setFormulario] = useState(true);
@@ -19,7 +19,7 @@ const Produto = () => {
     const [title, setTitle] = useState([]);
     const [preco, setPreco] = useState([]);
     const [descricao, setDescricao] = useState([]);
-    const [produto, setProduto] = useState([]);
+    const [pedido, setPedido] = useState([]);
     const [show, setShow] = useState(false);
     const [showdelete, setShowdelete] = useState(false);
     
@@ -41,12 +41,12 @@ const Produto = () => {
   }
 
   function getall() {
-    fetch("http://localhost:8080/api/Produto")
+    fetch("http://localhost:8080/api/Pedido")
             .then(res => res.json())
             .then(
                 (data) => {
                   console.log(data);
-                  setProduto(data);
+                  setPedido(data);
                 },
                 (error) => {
                   // setIsLoaded(true);
@@ -60,7 +60,7 @@ const Produto = () => {
     function editar(id) {
       setFormulario(true);
       console.log('Pedidos, editar', id);
-      fetch("http://localhost:8080/api/Produto/"+id)
+      fetch("http://localhost:8080/api/Pedido/"+id)
       .then(res => res.json())
       .then(
           (data) => {
@@ -105,7 +105,7 @@ const Produto = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pedido)
       };
-      fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
+      fetch('http://localhost:8080/api/Pedido/'+id, requestOptions)
         .then(response => response.json())
         .then(data => console.log("update - pedido") )
         .finally(() => {
@@ -116,12 +116,12 @@ const Produto = () => {
         });
     }
 
-    function deleteproduto(id) {
+    function deletepedido(id) {
       const requestOptions = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch('http://localhost:8080/api/Produto/'+id, requestOptions)
+      fetch('http://localhost:8080/api/Pedido/'+id, requestOptions)
         .then(response => response.json())
         .then(data => console.log("update - pedido") )
         .finally(() => {
@@ -139,7 +139,7 @@ const Produto = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pedido)
       };
-      fetch('http://localhost:8080/api/Produto/', requestOptions)
+      fetch('http://localhost:8080/api/Pedido/', requestOptions)
         .then(response => response.json())
         .then(data => console.log("update - pedido") )
         .finally(() => {
@@ -163,7 +163,7 @@ const Produto = () => {
           update(typeSend.id, pedido);
           break;
         case "delete":
-          deleteproduto(typeSend.id);
+          deletepedido(typeSend.id);
           break;
           
         default:
@@ -193,6 +193,7 @@ return(
           <tr>
             <th>#</th>
             <th>Descrição</th>
+            <th>Qtd Produtos</th>
             <th>Preço</th>
             <th>Data de Cadastro</th>
             <th>Editar / Deletar</th>
@@ -200,13 +201,16 @@ return(
         </thead>
       
         <tbody>
-          {produto.map(data => (
+          {pedido.map(data => (
             <tr key={data.id}>
                 <td>
                   {data.id}
                 </td>
                 <td>
                   {data.descricao}
+                </td>
+                <td>
+                  {data.qtdProduto}
                 </td>
                 <td>
                   {data.preco}
@@ -249,7 +253,7 @@ return(
               <Form.Label>Descrição</Form.Label>
               <Form.Control name="descricao" type="text" placeholder="Enter descricao" defaultValue={descricao} />
               <Form.Text className="text-muted">
-               Descrição do Produto
+               Descrição do Pedido
               </Form.Text>
             </Form.Group>
 
@@ -277,7 +281,7 @@ return(
 
       <Modal show={showdelete} onHide={handleCloseDelete} animation={false} fade={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Tem certeza que deseja deletar o Produto</Modal.Title>
+          <Modal.Title>Tem certeza que deseja deletar o Pedido</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
@@ -293,4 +297,4 @@ return(
   </>
 );
 }
-export default Produto;
+export default Pedido;
