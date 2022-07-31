@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,6 +8,33 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import AccordionContext from "react-bootstrap/AccordionContext";
+import Image from 'react-bootstrap/Image'
+import carrinhocompras from '../assets/icon/carrinho-de-compras.png';
+
+function ContextAwareToggle({ children, eventKey, callback }) {
+  const { activeEventKey } = useContext(AccordionContext);
+
+  const decoratedOnClick = useAccordionButton(
+    eventKey,
+    () => callback && callback(eventKey),
+  );
+
+  const isCurrentEventKey = activeEventKey === eventKey;
+console.log(children, eventKey, callback, "ContextAwareToggle")
+  return (
+    <button
+      type="button"
+      style={{ backgroundColor: isCurrentEventKey ? 'pink' : 'lavender' }}
+      onClick={(e) =>decoratedOnClick()}
+
+    >
+      {children}
+    </button>
+  );
+}
 
 const Pedido = () => {
     const [loading, setloading] = useState(false);
@@ -188,6 +215,7 @@ return(
       </Row>
       {' '}
       {/* add pedido */}
+      {/* <Accordion defaultActiveKey="0"> */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -195,38 +223,63 @@ return(
             <th>Descrição</th>
             <th>Qtd Produtos</th>
             <th>Preço</th>
+            <th>Nome do Fornecedor</th>
             <th>Data de Cadastro</th>
+            <th>Ver Carrinho</th>
             <th>Editar / Deletar</th>
           </tr>
         </thead>
       
         <tbody>
           {pedido.map(data => (
-            <tr key={data.id}>
-                <td>
-                  {data.id}
-                </td>
-                <td>
-                  {data.descricao}
-                </td>
-                <td>
-                  {data.qtdProduto}
-                </td>
-                <td>
-                  {data.preco}
-                </td>
-                <td>
-                  {data.dataCadastro}
-                </td>
-                <th>
-                  <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Editar</Button>
-                  {' '}
-                  <Button variant="danger" onClick={(e) =>deletar(data.id)} size="lg">Deletar</Button>
-                </th>
-            </tr>
+            <>
+           
+              <tr key={data.id}>
+                  <td>
+                    {data.id}
+                  </td>
+                  <td>
+                    {data.descricao}
+                  </td>
+                  <td>
+                    {data.qtdProduto}
+                  </td>
+                  <td>
+                    {data.preco}
+                  </td>
+                  <td>
+                    {data.fornecedor.nome}
+                  </td>
+                  <td>
+                    {data.dataCadastro}
+                  </td>
+                  <td>
+                    <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Produtos</Button>
+                  </td>
+                  <th>
+                    <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Editar</Button>
+                    {' '}
+                    <Button variant="danger" onClick={(e) =>deletar(data.id)} size="lg">Deletar</Button>
+                    {' '}
+                    {/* <ContextAwareToggle eventKey={data.id}>Click me!</ContextAwareToggle> */}
+                  </th>
+              </tr>
+
+              
+                {/* <Card> 
+                  <Card.Header>*/}
+                    {/* <ContextAwareToggle eventKey={data.id}>Click me!</ContextAwareToggle> */}
+                  {/* </Card.Header> 
+                  <Accordion.Collapse eventKey={data.id}>
+                    <Card.Body>Hello! I'm the body</Card.Body>
+                  </Accordion.Collapse>
+                </Card>  */}
+              
+            </>
           ))}        
         </tbody>
       </Table>
+      {/* </Accordion> */}
       {/* MODAL */}
       <Modal show={show} onHide={createClose} animation={false} fade={false}>
 
