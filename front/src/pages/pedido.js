@@ -106,6 +106,29 @@ const Pedido = () => {
       )
     }
 
+
+    function listagensProdutos(id) {
+      setFormulario(true);
+      //TODO::criar no back-end a consulta dos pedidos
+      fetch("http://localhost:8080/api/Pedido/"+id)
+      .then(res => res.json())
+      .then(
+          (data) => {
+              setTitle("Editar Pedido");
+              setPreco(data.preco);
+              setDescricao(data.descricao);
+              setShow(true);
+
+              setTypeSend({type:"update", id: id});
+              
+          },
+          (error) => {
+              // setIsLoaded(true);
+              // setError(error);
+          }
+      )
+    }
+
     function deletar(id) {
       console.log('Pedidos, deletar', id);
       setTypeSend({type:"delete", id: id});
@@ -233,36 +256,35 @@ return(
         <tbody>
           {pedido.map(data => (
             <>
-           
               <tr key={data.id}>
-                  <td>
-                    {data.id}
-                  </td>
-                  <td>
-                    {data.descricao}
-                  </td>
-                  <td>
-                    {data.qtdProduto}
-                  </td>
-                  <td>
-                    {data.preco}
-                  </td>
-                  <td>
-                    {data.fornecedor.nome}
-                  </td>
-                  <td>
-                    {data.dataCadastro}
-                  </td>
-                  <td>
-                    <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Produtos</Button>
-                  </td>
-                  <th>
-                    <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Editar</Button>
-                    {' '}
-                    <Button variant="danger" onClick={(e) =>deletar(data.id)} size="lg">Deletar</Button>
-                    {' '}
-                    {/* <ContextAwareToggle eventKey={data.id}>Click me!</ContextAwareToggle> */}
-                  </th>
+                <td>
+                  {data.id}
+                </td>
+                <td>
+                  {data.descricao}
+                </td>
+                <td>
+                  {data.qtdProduto}
+                </td>
+                <td>
+                  {data.preco}
+                </td>
+                <td>
+                  {data.fornecedor.nome}
+                </td>
+                <td>
+                  {data.dataCadastro}
+                </td>
+                <td>
+                  <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Produtos</Button>
+                </td>
+                <th>
+                  <Button variant="primary" onClick={(e) =>editar(data.id)} size="lg">Editar</Button>
+                  {' '}
+                  <Button variant="danger" onClick={(e) =>deletar(data.id)} size="lg">Deletar</Button>
+                  {' '}
+                  {/* <ContextAwareToggle eventKey={data.id}>Click me!</ContextAwareToggle> */}
+                </th>
               </tr>
 
               
