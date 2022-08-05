@@ -107,14 +107,14 @@ const Pedido = () => {
     }
 
 
-    function listagensProdutos(id) {
+    function getPeidoListagensProdutos(id) {
       setFormulario(true);
       //TODO::criar no back-end a consulta dos pedidos
       fetch("http://localhost:8080/api/Pedido/"+id)
       .then(res => res.json())
       .then(
           (data) => {
-              setTitle("Editar Pedido");
+              setTitle("Editar  Produtos");
               setPreco(data.preco);
               setDescricao(data.descricao);
               setShow(true);
