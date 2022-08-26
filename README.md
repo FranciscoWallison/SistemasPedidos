@@ -1,5 +1,5 @@
 # SistemasPedidos
 ````
 FRONT-END react js
-BACK-END dotnet
+BACK-END dotnet.core
 ````
