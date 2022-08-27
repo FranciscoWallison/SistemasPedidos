@@ -22,10 +22,10 @@ namespace SistemaPedidos.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ProdutoDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PedidoProdutoDto>))]
         public IActionResult getALL(){
 
-            var produtos = _mapper.Map<ICollection<ProdutoDto>>(_produtosRepository.getALL());
+            var produtos = _mapper.Map<ICollection<PedidoProdutoDto>>(_produtosRepository.getALL());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,7 +34,7 @@ namespace SistemaPedidos.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ProdutoDto))]
+        [ProducesResponseType(200, Type = typeof(PedidoProdutoDto))]
         [ProducesResponseType(400)]
         public IActionResult get(int Id)
         {
@@ -50,7 +50,7 @@ namespace SistemaPedidos.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromBody] ProdutoDto produtoCreate)
+        public IActionResult Create([FromBody] PedidoProdutoDto produtoCreate)
         {
 
             if (produtoCreate == null)
@@ -72,7 +72,7 @@ namespace SistemaPedidos.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Update(int produtoId, [FromBody] ProdutoDto produtoUpdate)
+        public IActionResult Update(int produtoId, [FromBody] PedidoProdutoDto produtoUpdate)
         {
 
             if (!_produtosRepository.Exists(produtoId))
